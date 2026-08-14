@@ -5,6 +5,8 @@
 
 # Физ. модель
 docs/docsconceptual-model.png (2).png
+docs/physical-model.md
+БД нормализована и приведена к форме 3ФН.
 
 # Сценарии использования
 
