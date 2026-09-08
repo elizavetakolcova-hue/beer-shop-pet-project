@@ -19,3 +19,6 @@ CREATE TABLE "Товары_в_продаже"
         FOREIGN KEY ("Код_товара")
         REFERENCES "Товар"("Код_товара")
 );
+
+ALTER TABLE "Товары_в_продаже"
+ADD COLUMN "Цена_за_единицу" NUMERIC(10,2) NOT NULL DEFAULT 0;
