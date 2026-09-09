@@ -152,5 +152,12 @@ SELECT
     DATE '2026-02-01' + b.id
 FROM generate_series(1, 30) AS b(id);
 
+PERFORM setval(pg_get_serial_sequence('"Поставщик"', 'Код_поставщика'), (SELECT MAX("Код_поставщика") FROM "Поставщик"));
+PERFORM setval(pg_get_serial_sequence('"Уровень_лояльности"', 'Код_уровня'), (SELECT MAX("Код_уровня") FROM "Уровень_лояльности"));
+PERFORM setval(pg_get_serial_sequence('"Товар"', 'Код_товара'), (SELECT MAX("Код_товара") FROM "Товар"));
+PERFORM setval(pg_get_serial_sequence('"Поставка"', 'Код_поставки'), (SELECT MAX("Код_поставки") FROM "Поставка"));
+PERFORM setval(pg_get_serial_sequence('"Клиент"', 'Код_клиента'), (SELECT MAX("Код_клиента") FROM "Клиент"));
+PERFORM setval(pg_get_serial_sequence('"Продажи"', 'Код_продажи'), (SELECT MAX("Код_продажи") FROM "Продажи"));
+PERFORM setval(pg_get_serial_sequence('"Бонусные_операции"', 'Код_операции'), (SELECT MAX("Код_операции") FROM "Бонусные_операции"));
 end;
 $$;
