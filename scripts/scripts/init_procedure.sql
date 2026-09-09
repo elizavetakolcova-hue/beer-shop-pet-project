@@ -33,7 +33,9 @@ SELECT
     ((l.id - 1) * 1000)::numeric(10, 2),
     (5 + (l.id - 1) * 3)::numeric(5, 2)
 FROM generate_series(1, 15) AS l(id);
-
+UPDATE "Уровень_лояльности"
+SET "Следующий_код_уровня" = "Код_уровня" + 1
+WHERE "Код_уровня" < (SELECT MAX("Код_уровня") FROM "Уровень_лояльности");
 
 INSERT INTO "Товар" (
     "Код_товара",
