@@ -65,17 +65,22 @@ SELECT
 FROM generate_series(1, 30) AS s(id);
 
 
-INSERT INTO "Товары_в_поставке" (
+WITH пары_поставка_товар AS (
+    SELECT
+        п."Код_поставки",
+        т."Код_товара",
+        ROW_NUMBER() OVER (PARTITION BY п."Код_поставки" ORDER BY т."Код_товара") AS номер
+    FROM "Поставка" п
+    JOIN "Товар" т ON т."Код_поставщика" = п."Код_поставщика"
+)
+INSERT INTO "Товары_в_поставке" ("Код_поставки", "Код_товара", "Количество")
+SELECT
     "Код_поставки",
     "Код_товара",
-    "Количество"
-)
-SELECT
-    s.supply_id,
-    ((s.supply_id + o.offset_id - 1) % 30) + 1,
-    5 + o.offset_id * 3 + (s.supply_id % 7)
-FROM generate_series(1, 30) AS s(supply_id)
-CROSS JOIN generate_series(0, 1) AS o(offset_id);
+    5 + номер * 3 + (Код_поставки % 7) as Количество
+    CHECK (Количество > 0)
+FROM пары_поставка_товар
+WHERE номер <= 2;
 
 
 INSERT INTO "Клиент" (
